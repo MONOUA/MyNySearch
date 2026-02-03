@@ -3,29 +3,27 @@ import { useDebounce } from 'use-debounce'
 import { useStateContext } from '../contexts/StateContextProvider'
 
 function Search() {
-    const { setSearchTerm, getResults } = useStateContext()
-    const [text, setText] = useState('programming')
-    const [debouncedValue] = useDebounce(text, 1000)
+    const { setSearchTerm } = useStateContext()
+    const [text, setText] = useState('Moh Noua')
+    const [debouncedValue] = useDebounce(text, 300)
 
     useEffect(() => {
         if (debouncedValue) {
             setSearchTerm(debouncedValue);
         }
-    }, [debouncedValue, setSearchTerm, getResults]);
+    }, [debouncedValue, setSearchTerm]);
 
     return (
-        <div>
-            <div>Search</div>
+        <div className="relative sm:ml-48 md:ml-72 sm:mt-10 mt-3 sm:w-96 w-80">
             <input 
+                value={text}
                 type="text" 
-                value={text} 
                 onChange={(e) => setText(e.target.value)} 
                 placeholder="Rechercher sur le web..." 
-                aria-label="Barre de recherche principale" 
-                id="search-input"
+                className="w-full h-10 dark:bg-gray-200 border rounded-full shadow-sm outline-none p-6 text-black hover:shadow-lg"
             />
-            {text && (
-                <button onClick={() => setText('')}>
+            {text !== '' && (
+                <button type="button" className="absolute top-1.5 right-4 text-2xl text-gray-500" onClick={() => setText('')}>
                     x
                 </button>
             )}
