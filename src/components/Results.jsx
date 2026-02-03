@@ -21,6 +21,13 @@ function Results() {
     },[searchTerm,location.pathname,getResults]);
 
   if (loading) return <Loading />
+  if (!searchTerm) return (
+    <div className="flex flex-col items-center justify-center h-[70vh]">
+        <p className="text-4xl font-bold mb-5 dark:text-white">Welcome to MyNySEARCH 🔎</p>
+        <p className="text-xl dark:text-gray-300">Type something to start searching.</p>
+    </div>
+  )
+
   if (error) return (
     <div className="flex justify-center items-center">
         <p className="text-xl text-center mt-10">
@@ -33,11 +40,11 @@ function Results() {
         case '/search':
             return (
                 <div className="flex flex-wrap justify-between space-y-6 sm:px-56">
-                    {results?.results?.map(({link,title},index)=>(
+                    {results?.results?.map(({link, url, title},index)=>(
                         <div key={index} className="md:w-2/5 w-full">
-                            <a href={link} target='_blank' rel='noreferrer'>
+                            <a href={link || url} rel='noreferrer'>
                                 <p className="text-sm">
-                                    {link?.length > 10 ? link.substring(0 , 10) : link}
+                                    {(link || url)?.length > 30 ? (link || url).substring(0 , 30) : (link || url)}
                                 </p>
                                 <p className="text-lg hover:underline dark:text-blue-300 text-blue-700">
                                     {title}
@@ -52,7 +59,7 @@ function Results() {
             return (
                 <div className="flex flex-wrap justify-center items-center">
                     {results?.image_results?.map(({image,link : {href,title}}, index)=>(
-                        <a className="sm:p-3 p-5" href={href} target='_blank' key={index} rel='noreferrer'>
+                        <a className="sm:p-3 p-5" href={href} key={index} rel='noreferrer'>
                             <img src={image?.src} alt={title} loading='lazy'/>
                             <p className="w-36 break-words text-sm mt-2">
                                 {title}
@@ -67,13 +74,13 @@ function Results() {
                 <div className="flex flex-wrap justify-between space-y-6 sm:px-56 items-center">
                     {results?.entries?.map(({id, links, source, title})=>(
                         <div key={id} className="md:w-2/5 w-full">
-                            <a href={links?.[0].href} target='_blank' rel='noreferrer' className="hover:underline">
+                            <a href={links?.[0].href} rel='noreferrer' className="hover:underline">
                                 <p className="text-lg dark:text-blue-300 text-blue-700">
                                     {title}
                                 </p>
                             </a>
                             <div className="flex gap-4">
-                                <a href={source?.href} target='_blank' rel='noreferrer'>
+                                <a href={source?.href} rel='noreferrer'>
                                     {""}
                                     {source?.href}
                                 </a>

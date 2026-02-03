@@ -12,9 +12,9 @@ function App() {
 
     return (
         <div className={darkTheme? 'dark' : ''}>
-            <div className="bg-gray-100 dark:bg-gray-900 dark:text-gray-200 min-h-screen flex flex-col">
+            <div className="bg-gray-100 dark:bg-gray-900 dark:text-gray-200 h-screen flex flex-col overflow-hidden">
                 <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
-                <div className="flex-grow">
+                <div className="flex-grow overflow-y-auto">
                     {!isHome && <Links />}
                     <Outlet />
                     {isHome && <Links />}

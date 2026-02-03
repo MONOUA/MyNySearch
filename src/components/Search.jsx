@@ -4,13 +4,11 @@ import { useStateContext } from '../contexts/StateContextProvider'
 
 function Search() {
     const { setSearchTerm } = useStateContext()
-    const [text, setText] = useState('Moh Noua')
+    const [text, setText] = useState('')
     const [debouncedValue] = useDebounce(text, 300)
 
     useEffect(() => {
-        if (debouncedValue) {
-            setSearchTerm(debouncedValue);
-        }
+        setSearchTerm(debouncedValue);
     }, [debouncedValue, setSearchTerm]);
 
     return (
